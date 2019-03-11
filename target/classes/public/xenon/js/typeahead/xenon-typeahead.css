@@ -1,0 +1,56 @@
+
+span.twitter-typeahead {
+	width: 100%
+}
+
+span.twitter-typeahead .tt-dropdown-menu {
+	background: #fff;
+	border: 1px solid #e4e4e4;
+	width: 100%;
+	margin-top: -1px;
+	max-height: 250px;
+	overflow: auto
+}
+
+span.twitter-typeahead .tt-suggestion.tt-cursor {
+	background-color: #fafafa
+}
+
+span.twitter-typeahead .tt-hint {
+	color: #cacbcb
+}
+
+span.twitter-typeahead .empty-message {
+	padding: 5px 13px;
+	color: #bdbebe
+}
+
+span.twitter-typeahead .tt-suggestion>p {
+/* 	padding: 5px 13px */
+}
+
+span.twitter-typeahead .tt-suggestion>p .tt-highlight {
+	color: #7d7f7f
+}
+
+span.twitter-typeahead .tt-suggestion>p:hover, span.twitter-typeahead .tt-suggestion>p:focus
+	{
+	background: #fafafa;
+	cursor: pointer
+}
+
+.input-group span.twitter-typeahead {
+	display: block !important
+}
+
+.input-group span.twitter-typeahead .tt-dropdown-menu {
+	top: 32px !important
+}
+
+.input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
+	top: 44px !important
+}
+
+.input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
+	top: 28px !important
+}

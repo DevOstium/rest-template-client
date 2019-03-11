@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project - Fagner Lira</title>
+
+<!-- Incluindo o CSS do Bootstrap -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="/public/css/select2/select2.css">
+<link href="/public/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+
+<script src="/public/js/jquery-1.10.2.min.js" type="text/javascript" charset="${_response_encoding}"></script>
+<script src="/public/js/bootstrap.min.js" type="text/javascript" charset="${_response_encoding}"></script>
+
+
+<!-- xenon -->
+<link rel="stylesheet" href="/public/xenon/js/typeahead/xenon-typeahead.css">
+
+
+<script>
+datatablespt = {
+    "sEmptyTable":     "Nenhum registro encontrado ",
+    "sInfo": "Mostrando _START_ até _END_ de _TOTAL_ registros",
+    "sInfoEmpty": "Mostrando 0 até 0 de 0 Registros",
+    "sInfoFiltered": "(Filtrado de _MAX_)",
+    "sInfoPostFix":    "",
+    "sInfoThousands":  ".",
+    "sLengthMenu": "Mostrar _MENU_ registros por página",
+    "sLoadingRecords": "Carregando...",
+    "sProcessing":     "Processando...",
+    "sZeroRecords": "Nenhum registro encontrado",
+    "sSearch": "Pesquisar",
+    "oPaginate": {
+        "sNext": "Próximo",
+        "sPrevious": "Anterior",
+        "sFirst": "Primeiro",
+        "sLast":"Último"
+    },
+    "oAria": {
+        "sSortAscending":  ": Ordenar colunas de forma ascendente",
+        "sSortDescending": ": Ordenar colunas de forma descendente"
+    }
+}
+
+</script>
+
+<style>
+  .modal-header, h4, .close {
+      background-color: #5cb85c;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+</style>
+
+
+</head>
+<body>
+
+
+
+
+<div class="container">
+  <h2>Modal ## Cadastro de Cliente</h2>
+ 
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-default btn-lg" onclick="showCadastrarCliente();">Cadastro de Cliente</button>
+
+</div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <form class="form-inline" id="p-form" action="k" method="GET" accept-charset="${_response_encoding}">
+            <div class="row">
+                
+           
+             </div>
+        </form>
+    </div> 
+</div> 
+
+
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-hover table-bordered table-hover table-condensed" id="dtable">
+          <thead>
+            <tr>
+              <th style="width:1%">ID</th>
+              <th style="width:10%">Nome</th>
+              <th style="width:5%">Editora</th>
+              <th style="width:5%">Publica��o</th>
+              <th style="width:5%">Resumo</th>
+              <th style="width:1%">Excluir</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+          		<tr>
+          			<td colspan="5" class="dataTables_empty">Carregando Dados...</td>
+          		</tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/public/js/select2/select2.min.js"></script>
+
+<script src="/public/js/jquery.inputmask.bundle.min.js"></script>
+<script src="/public/js/accounting.min.js"></script>
+<script src="/public/js/ufs.js"></script>
+
+<!-- xenon -->
+<script src="/public/xenon/js/typeahead/xenon-typeahead.bundle.js"></script>
+
+<!-- datatables -->
+<script src="/public/js/datatables-1.10/jquery.dataTables.min.js"></script>
+<script src="/public/js/datatables-1.10/dataTables.bootstrap.js"></script>
+
+
+
+<div id="toend">
+    <div id="end-criar"></div>
+    <div id="end-editar"></div>
+    <div id="end-excluir"></div> 
+</div>
+
+
+
+<script type="text/javascript">
+function showCadastrarCliente() {
+    $('#end-criar').load(
+    		  '/clientes/cadastrarCliente'
+    		  ,function() {
+    			   $("#modal-cadastrar-cliente").modal('show'); 
+    	     }
+   	);
+}
+
+
+function editarCadastroCliente(id) {
+    $('#end-editar').load(
+    		'/clientes/editar'
+    		, {id:id}
+    		, function() {
+    			$("#modal-editar").modal('show');
+    		}
+    );
+}
+
+
+<script type="text/javascript">
+        
+       
+        
+        function edit(id) {
+            var action = #{jsAction @Clientes.editar(':id') /} 
+            $('#end-editar').load(action({id:id}), function() {$("#modal-editar").modal('show');});
+        }
+        
+        function excluir(id) {
+            var action = #{jsAction @Clientes.excluir(':id') /} 
+            $('#end-excluir').load(action({id:id}), function() {
+            	$("#modal-excluir-cliente").modal('show');
+            });
+        }
+        
+        
+
+        
+        
+        
+        $().ready(function(){
+            
+            $('#end').append($('#toend').children());
+            
+            buildTable();
+            
+            $("#p-form").submit(function(e) {
+                e.preventDefault();
+            });
+            $("#p-form :input").change(function(e) {
+                e.preventDefault();
+                otable.fnDraw();
+            });
+        });
+
+        
+             
+        
+        
+        
+        function buildTable(){
+        	otable= $('#dtable').dataTable( { // l no dom é o tamanho da pagina
+        		"sPaginationType": "full_numbers",
+         	    "dom": '<"top"lip>rt<"bottom"ip>',
+         	   "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
+         		"lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "Tudo"]], 
+         		            "iDisplayLength": 5,
+     		                "language":  datatablespt,
+          			        "searching": false, 
+        			        "bProcessing": true, 
+         			        "bServerSide": true,
+        		"sAjaxSource": "http://localhost:8080/livros",
+        		
+        		"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+           		  //pegas os val dos inputs/selects do form para filtrar
+           		  formparams(aoData);
+           		  //aqui eu configuro a request ao server
+      	    	  console.log("Executa ajax.");  
+           	      oSettings.jqXHR = 
+           	    	  $.ajax( {
+           	                   "dataType": 'json', 
+           	                       "type": "get", 
+           	                        "url": sSource,
+           	                       "data": aoData,
+           	                    "success": function(result){
+         	                                                fnCallback(result); 
+         	                                                $("#cliente").val('');
+           	        }, error: function(){ 
+				
+           	        	alert("errro do fnServerData ");
+           	        }
+           	      }); //success        		
+        		}, //fn Server Data
+
+        		
+         	    "aoColumns": [
+         	                  
+                     
+                     { "data": "id"},
+                  
+                     
+                     { "data": "DT_RowId", render: function(d, t, r, m){
+                    	 var ret = '';
+                    	 ret += " <strong><a class='bold blue nome' href='javascript:edit("+r.id+")' >"+r.nome+"</a></strong>";
+                    	//ret += " <br /> <i class='fa fa-tag'> </i> "+r.codigo;
+                	 	 return ret;
+                     	}
+                     },    
+                     
+                     
+                     { "data": "editora"},
+                     { "data": "publicao"},
+                     { "data": "resumo"},
+                     
+                     
+                     { "data": "DT_RowId", render: function(d, t, r, m){
+                    	 var retorno = 'Excluir';
+                    	 retorno = " <strong><a class='bold blue nome' href='javascript:excluir("+r.id+")' >"+retorno+"</a></strong>";
+                    	//ret += " <br /> <i class='fa fa-tag'> </i> "+r.codigo;
+                	 	 return retorno;
+                     	}
+                     }  
+                     
+                     ]
+         	});
+        }
+
+        function formparams(aoData){
+        	aoData.push.apply(aoData, $('#p-form').serializeArray());
+        }
+</script>
+
+
+        
+   
+
+</body>
+</html>

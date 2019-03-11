@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>:: Social Books API</title>
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+
+
+</head>
+<body>
+	<button class="js-load-books">Listar livros</button>
+	<p>
+		
+		<table id="dataTable"  class="js-books-table table table-bordered table-striped">
+			<thead>
+				<tr>
+					<td>ID</td>
+					<td>Nome</td>
+					<td>Editora</td>
+					<td>Publicação</td>
+					<td>Resumo</td>
+				</tr>
+			</thead>
+			<tbody class="js-books-table-body"></tbody>
+		</table>
+	</p>
+	<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+	<script src="livrosClient.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+</body>
+</html>
